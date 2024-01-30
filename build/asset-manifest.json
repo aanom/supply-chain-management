@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/supply-chain-management/static/css/main.e6c13ad2.css",
+    "main.js": "/supply-chain-management/static/js/main.6552351d.js",
+    "static/js/787.b87bd855.chunk.js": "/supply-chain-management/static/js/787.b87bd855.chunk.js",
+    "index.html": "/supply-chain-management/index.html",
+    "main.e6c13ad2.css.map": "/supply-chain-management/static/css/main.e6c13ad2.css.map",
+    "main.6552351d.js.map": "/supply-chain-management/static/js/main.6552351d.js.map",
+    "787.b87bd855.chunk.js.map": "/supply-chain-management/static/js/787.b87bd855.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.6552351d.js"
+  ]
+}
