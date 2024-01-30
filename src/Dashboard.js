@@ -129,6 +129,19 @@ export default function PersistentDrawerLeft() {
     //setSelectedTab(1);
   };
 
+  const [searchTerm, setSearchTerm] = React.useState("");
+
+  const handleSearchChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+
+    const filteredRows = rows.filter((item) =>
+      String(item.id).includes(searchTerm)
+    );
+
+    setRowData(filteredRows);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -208,6 +221,15 @@ export default function PersistentDrawerLeft() {
         <DrawerHeader />
         {selectedTab === 0 && (
           <>
+            <div style={{ marginBottom: 16 }}>
+              <input
+                type="text"
+                placeholder="Search by SKU"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{ padding: 8, width: 350 }}
+              />
+            </div>
             <Button
               variant="contained"
               color="primary"
