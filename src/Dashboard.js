@@ -284,6 +284,7 @@ export default function PersistentDrawerLeft() {
                 setRowSelectionModel(newRowSelectionModel);
               }}
               rowSelectionModel={rowSelectionModel}
+              getRowId={(row) => row.id}
             />
           </>
         )}

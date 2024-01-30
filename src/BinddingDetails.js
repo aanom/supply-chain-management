@@ -1,37 +1,17 @@
 import * as React from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Tabs from "@mui/material/Tabs";
-import Card from "@mui/material/Card"; // Add this import
-import Tab from "@mui/material/Tab";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
+import { DataGrid } from "@mui/x-data-grid";
+import Card from "@mui/material/Card";
+import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { DataGrid } from "@mui/x-data-grid";
-import { useParams } from "react-router-dom";
-import { Button } from "@mui/material";
 
 const drawerWidth = 240;
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -73,45 +53,62 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
+
 const CardBox = styled(Card)({
   margin: "10px",
   padding: "15px",
   textAlign: "center",
   borderRadius: "10px",
+  width: "100%", // Set width to 100% of the container
+  boxSizing: "border-box", // Ensure padding and border are included in the width
 });
 
-function BinddingDetails() {
-  const location = useLocation();
-  console.log(location);
+const CompaniesTable = () => {
   const navigate = useNavigate();
-
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [selectedTab, setSelectedTab] = React.useState(0);
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "name", headerName: "Name", width: 200 },
+    { field: "companyUuid", headerName: "Company UUID", width: 200 },
+    { field: "rewards", headerName: "Rewards", width: 120 },
+    { field: "reviews", headerName: "Reviews", width: 120 },
+    { field: "bidAmount", headerName: "Bid Amount", width: 120 },
+  ];
+
+  const rows = [
+    {
+      id: 1,
+      name: "Company A",
+      companyUuid: "12345",
+      rewards: 5,
+      reviews: 4,
+      bidAmount: 1000,
+    },
+    {
+      id: 2,
+      name: "Company B",
+      companyUuid: "67890",
+      rewards: 3,
+      reviews: 4,
+      bidAmount: 800,
+    },
+    // Add more rows as needed
+  ];
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-  const orderDetails = {
-    orderId: 123,
-    customerName: "John Doe",
-    // Add more order details
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
-
-  const companyList = [
-    { id: 1, name: "Company A" },
-    { id: 2, name: "Company B" },
-    // Add more companies
-  ];
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -129,53 +126,44 @@ function BinddingDetails() {
             component="div"
             onClick={() => navigate(`/`)}
           >
-            {`Supply Management System`}
+            {"Supply Management System"}
           </Typography>
         </Toolbar>
       </AppBar>
 
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}></IconButton>
+        </DrawerHeader>
+        {/* Add your drawer content here */}
+      </Drawer>
+
       <Main open={open}>
         <DrawerHeader />
-        <Tabs
-          value={selectedTab}
-          //onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          style={{ paddingLeft: 10 }}
-        >
-          {["bids"].map((tab, index) => (
-            <Tab
-              label={tab}
-              key={index}
-              sx={{
-                backgroundColor: selectedTab === index ? "#fff" : "#77B6EA",
-                color: selectedTab === index ? "#77B6EA" : "#fff",
-              }}
-            />
-          ))}
-        </Tabs>
-        {selectedTab === 0 && (
-          <div>
-            <div>
-              <h2>Order Details</h2>
-              <p>Order ID: {orderDetails.orderId}</p>
-              <p>Customer Name: {orderDetails.customerName}</p>
-              {/* Display more order details */}
-            </div>
-
-            <div>
-              <h2>Company List</h2>
-              <ul>
-                {companyList.map((company) => (
-                  <li key={company.id}>{company.name}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
+        <CardBox style={{ width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5, 10, 15]}
+            //checkboxSelection
+          />
+        </CardBox>
       </Main>
     </Box>
   );
-}
+};
 
-export default BinddingDetails;
+export default CompaniesTable;
