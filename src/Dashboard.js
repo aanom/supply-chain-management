@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -69,9 +71,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [rowData, setRowData] = React.useState(rows);
-
+  const [groupedShipments, setGroupedShipments] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState(0);
   const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
@@ -93,13 +96,14 @@ export default function PersistentDrawerLeft() {
   const handleConsolidateOrders = () => {
     if (window.confirm("Consolidate Orders")) {
       const groupedShipments = {};
+      const groupedShipmentData = [];
       const shipments = [];
       // Iterate over the selected rows
+
       rowSelectionModel.forEach((selectedRowId) => {
         const selectedRow = rows.find(
           (row) => row.id === selectedRowId && row.STATUS === "UNPLANNED"
         );
-
         // Create a unique key based on destination, ETA, and mode of transport
         const key =
           `${selectedRow.Destination}-${selectedRow.ETA}-${selectedRow.Mode_of_Transport}-${selectedRow.Preferred_Carrier}`
@@ -114,6 +118,26 @@ export default function PersistentDrawerLeft() {
           groupedShipments[key].push(selectedRow);
         } else {
           // If it doesn't exist, create a new group with the selected row
+          let shipment = {
+            id: key,
+            Destination: selectedRow.Destination,
+            ETA: selectedRow.ETA,
+            Mode_of_Transport: selectedRow.Mode_of_Transport,
+            Preferred_Carrier: selectedRow.Preferred_Carrier,
+            Assigned_Carrier: selectedRow.Preferred_Carrier,
+            Bidding_Option: false,
+            STATUS: "PLANNED",
+          };
+
+          if (
+            selectedRow.Mode_of_Transport === "" ||
+            selectedRow.Preferred_Carrier === ""
+          ) {
+            shipment.Bidding_Option = true;
+            shipment.STATUS = "UNPLANNED";
+            shipment.Assigned_Carrier = "";
+          }
+          groupedShipmentData.push(shipment);
           groupedShipments[key] = [selectedRow];
         }
       });
@@ -121,7 +145,7 @@ export default function PersistentDrawerLeft() {
       // Log the grouped shipments
       // console.log(groupedShipments);
       // console.log(shipments);
-
+      setGroupedShipments(groupedShipmentData);
       setRowData(shipments);
       alert("sucessfully consolidate check shipping");
     }
@@ -237,6 +261,13 @@ export default function PersistentDrawerLeft() {
             >
               CONSOLIDATE MY ORDERS
             </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate(`map`)}
+            >
+              Check on Google Map
+            </Button>
             <DataGrid
               rows={rowData}
               columns={columns}
@@ -258,7 +289,7 @@ export default function PersistentDrawerLeft() {
         )}
         {selectedTab === 1 && (
           <DataGrid
-            rows={rowData.filter((item) => item.STATUS === "PLANNED")}
+            rows={groupedShipments}
             columns={columnShipment}
             initialState={{
               pagination: {
