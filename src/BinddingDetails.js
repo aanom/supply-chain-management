@@ -97,15 +97,17 @@ function BinddingDetails() {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const orderDetails = {
+    orderId: 123,
+    customerName: "John Doe",
+    // Add more order details
   };
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
-
-  const tabs = ["Open Bids", "Closed Bids"];
+  const companyList = [
+    { id: 1, name: "Company A" },
+    { id: 2, name: "Company B" },
+    // Add more companies
+  ];
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -132,7 +134,46 @@ function BinddingDetails() {
         </Toolbar>
       </AppBar>
 
-      <Main open={open}></Main>
+      <Main open={open}>
+        <DrawerHeader />
+        <Tabs
+          value={selectedTab}
+          //onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          style={{ paddingLeft: 10 }}
+        >
+          {["bids"].map((tab, index) => (
+            <Tab
+              label={tab}
+              key={index}
+              sx={{
+                backgroundColor: selectedTab === index ? "#fff" : "#77B6EA",
+                color: selectedTab === index ? "#77B6EA" : "#fff",
+              }}
+            />
+          ))}
+        </Tabs>
+        {selectedTab === 0 && (
+          <div>
+            <div>
+              <h2>Order Details</h2>
+              <p>Order ID: {orderDetails.orderId}</p>
+              <p>Customer Name: {orderDetails.customerName}</p>
+              {/* Display more order details */}
+            </div>
+
+            <div>
+              <h2>Company List</h2>
+              <ul>
+                {companyList.map((company) => (
+                  <li key={company.id}>{company.name}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </Main>
     </Box>
   );
 }
