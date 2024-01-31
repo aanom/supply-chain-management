@@ -128,6 +128,7 @@ function Auction() {
             noWrap
             component="div"
             onClick={() => navigate(`/`)}
+            color={colors?.black}
           >
             {`Supply Management System`}
           </Typography>
@@ -184,8 +185,10 @@ function Auction() {
               label={tab}
               key={index}
               sx={{
-                backgroundColor: selectedTab === index ? "#fff" : "#77B6EA",
-                color: selectedTab === index ? "#77B6EA" : "#fff",
+                backgroundColor: selectedTab === index ? "#fff" : "transparent",
+                color: selectedTab === index ? "#77B6EA" : colors?.black,
+                borderTopLeftRadius:5,
+                borderTopRightRadius:5
               }}
             />
           ))}
@@ -200,13 +203,13 @@ function Auction() {
             <CardBox
               key={location.state.shipping.id}
               sx={{
-                backgroundColor: getRandomColor(),
+                backgroundColor: colors?.whiteSmoke,
                 flex: 1,
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
               }}
             >
-              <Typography variant="h5">
+              <Typography variant="h6">
                 ID: {location.state.shipping.id}
               </Typography>
               <Typography variant="subtitle1">
@@ -245,13 +248,13 @@ function Auction() {
                 <CardBox
                   key={item}
                   sx={{
-                    backgroundColor: getRandomColor(),
+                    backgroundColor: colors?.whiteSmoke,
                     flex: 1,
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
                   }}
                 >
-                  <Typography variant="h5">ID: {item}</Typography>
+                  <Typography variant="h7">ID: {item}</Typography>
                 </CardBox>
               </Box>
             );
