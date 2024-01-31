@@ -11,6 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { colors } from "./constants/colors";
 
 const Map = () => {
   const navigate = useNavigate();
@@ -38,22 +39,23 @@ const Map = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{backgroundColor:colors?.whiteSmoke}}>
         <Toolbar>
-          <IconButton color="inherit" aria-label="open drawer">
-            <MenuIcon />
-          </IconButton>
+          {/* <IconButton color="inherit" aria-label="open drawer">
+            <MenuIcon color="primary"/>
+          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
             component="div"
+            color={colors?.black}
             onClick={() => navigate(`/`)}
           >
             {`Supply Management System`}
           </Typography>
         </Toolbar>
       </AppBar>
-      <Box sx={{ flexGrow: 1, p: 3 }}>
+      <Box sx={{ flexGrow: 1, p: 3,mt:"40px" }}>
         <div>
           <h1>Orders on Google Map</h1>
           <MapWithMarkers markers={markers} />

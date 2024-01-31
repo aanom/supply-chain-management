@@ -22,6 +22,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { DataGrid } from "@mui/x-data-grid";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
+import { colors } from "./constants/colors";
 
 const drawerWidth = 240;
 const getRandomColor = () => {
@@ -67,6 +68,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  backgroundColor:colors?.whiteSmoke
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -112,7 +114,7 @@ function Auction() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -120,12 +122,13 @@ function Auction() {
             sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
             component="div"
             onClick={() => navigate(`/`)}
+            color={colors?.black}
           >
             {`Supply Management System`}
           </Typography>
@@ -182,8 +185,10 @@ function Auction() {
               label={tab}
               key={index}
               sx={{
-                backgroundColor: selectedTab === index ? "#fff" : "#77B6EA",
-                color: selectedTab === index ? "#77B6EA" : "#fff",
+                backgroundColor: selectedTab === index ? "#fff" : "transparent",
+                color: selectedTab === index ? "#77B6EA" : colors?.black,
+                borderTopLeftRadius:5,
+                borderTopRightRadius:5
               }}
             />
           ))}
@@ -198,13 +203,13 @@ function Auction() {
             <CardBox
               key={location.state.shipping.id}
               sx={{
-                backgroundColor: getRandomColor(),
+                backgroundColor: colors?.whiteSmoke,
                 flex: 1,
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
               }}
             >
-              <Typography variant="h5">
+              <Typography variant="h6">
                 ID: {location.state.shipping.id}
               </Typography>
               <Typography variant="subtitle1">
@@ -243,13 +248,13 @@ function Auction() {
                 <CardBox
                   key={item}
                   sx={{
-                    backgroundColor: getRandomColor(),
+                    backgroundColor: colors?.whiteSmoke,
                     flex: 1,
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
                   }}
                 >
-                  <Typography variant="h5">ID: {item}</Typography>
+                  <Typography variant="h7">ID: {item}</Typography>
                 </CardBox>
               </Box>
             );
