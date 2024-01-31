@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -21,6 +20,7 @@ import Button from "@mui/material/Button";
 import ListItemText from "@mui/material/ListItemText";
 import { DataGrid } from "@mui/x-data-grid";
 import data from "./data";
+import { colors } from "./constants/colors";
 
 const { columns, rows, columnShipment } = data;
 const drawerWidth = 240;
@@ -59,6 +59,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  backgroundColor:colors.whiteSmoke
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -162,7 +163,6 @@ export default function PersistentDrawerLeft() {
     const filteredRows = rows.filter((item) =>
       String(item.id).includes(searchTerm)
     );
-
     setRowData(filteredRows);
   };
 
@@ -171,16 +171,16 @@ export default function PersistentDrawerLeft() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
+            <MenuIcon color="primary"/>
+          </IconButton> */}
+          <Typography variant="h6" noWrap component="div" color={colors?.black}>
             {`Supply Management System`}
           </Typography>
           <Tabs
@@ -188,16 +188,17 @@ export default function PersistentDrawerLeft() {
             onChange={handleTabChange}
             indicatorColor="primary"
             textColor="primary"
-            style={{ paddingLeft: 10 }}
+            sx={{ marginLeft:5, borderColor:colors?.black}}
           >
             {tabs.map((tab, index) => (
               <Tab
                 label={tab}
                 key={index}
                 sx={{
-                  backgroundColor:
-                    selectedTab === index ? "#fff" : "transparent",
-                  color: selectedTab === index ? "#000" : "#fff",
+                  backgroundColor:selectedTab === index ? "#fff" : "transparent",
+                  color: selectedTab === index ? "#000" : colors?.black,
+                  borderTopLeftRadius:5,
+                  borderTopRightRadius:5
                 }}
               />
             ))}

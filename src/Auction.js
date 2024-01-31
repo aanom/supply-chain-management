@@ -22,6 +22,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { DataGrid } from "@mui/x-data-grid";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
+import { colors } from "./constants/colors";
 
 const drawerWidth = 240;
 const getRandomColor = () => {
@@ -67,6 +68,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  backgroundColor:colors?.whiteSmoke
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -112,7 +114,7 @@ function Auction() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -120,7 +122,7 @@ function Auction() {
             sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             variant="h6"
             noWrap

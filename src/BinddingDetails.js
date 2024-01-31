@@ -10,6 +10,7 @@ import Card from "@mui/material/Card";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { colors } from "./constants/colors";
 
 const drawerWidth = 240;
 
@@ -47,6 +48,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  backgroundColor:colors?.whiteSmoke
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -111,7 +113,7 @@ const CompaniesTable = () => {
     <Box sx={{ display: "flex" }}>
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -119,7 +121,7 @@ const CompaniesTable = () => {
             sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
